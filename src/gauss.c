@@ -10,21 +10,24 @@ int eliminate(Matrix* mat, Matrix* b) {
 
     for (int i = 0; i < mat->c - 1; i++)
     {
-        /*double maxabs = 0;
+        double maxabs = 0;  //znalezenie elementu głównego
         int maxr = i;
-        for (int j = i; j < mat->r; j++)
-        {
-            if (abs(mat->data[i][j]) > maxabs)
-            {
-                maxabs = mat->data[i][j];
-                double* pom = mat->data[maxr];
-                mat->data[maxr] = mat->data[i];
-                mat->data[i] = pom;
-            }
-
-        }*/
-
         for (int j = i + 1; j < mat->r; j++)
+        {
+            if (abs(mat->data[j][i]) > maxabs)
+            {
+                maxabs = mat->data[j][i];
+                maxr = j;
+            }
+        }
+        double* pom = mat->data[maxr]; //zamiana i tego wiersza z największym
+        mat->data[maxr] = mat->data[i];
+        mat->data[i] = pom;
+        pom = b->data[maxr];
+        b->data[maxr] = b->data[i];
+        b->data[i] = pom;
+
+        for (int j = i + 1; j < mat->r; j++) //eliminacja
         {
             double tmp = mat->data[j][i] / mat->data[i][i];
             for (int k = 0; k < mat->c; k++)
