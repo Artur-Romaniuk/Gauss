@@ -1,6 +1,7 @@
 #include "gauss.h"
 #include <math.h>
 
+#define epsilon 1e-6
 
 /**
  * Zwraca 0 - elimnacja zakonczona sukcesem
@@ -10,13 +11,13 @@ int eliminate(Matrix* mat, Matrix* b) {
 
     for (int i = 0; i < mat->c - 1; i++)
     {
-        double maxabs = 0;  //znalezenie elementu głównego
+        double maxabs = abs(mat->data[i][i]);  //znalezenie elementu głównego
         int maxr = i;
         for (int j = i + 1; j < mat->r; j++)
         {
             if (abs(mat->data[j][i]) > maxabs)
             {
-                maxabs = mat->data[j][i];
+                maxabs = abs(mat->data[j][i]);
                 maxr = j;
             }
         }
@@ -29,6 +30,8 @@ int eliminate(Matrix* mat, Matrix* b) {
 
         for (int j = i + 1; j < mat->r; j++) //eliminacja
         {
+            if (abs(mat->data[mat->r - 1][i]) <= epsilon) //jeżeli największy element w kolumnie to 0 to 0 znajduje sie na przekatne
+                return 1;                                 //zwracam 1, macierz osobliwa
             double tmp = mat->data[j][i] / mat->data[i][i];
             for (int k = 0; k < mat->c; k++)
                 mat->data[j][k] -= mat->data[i][k] * tmp;

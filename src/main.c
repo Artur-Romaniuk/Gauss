@@ -20,7 +20,7 @@ int main(int argc, char** argv) {
 
     res = eliminate(A, b);
     printf("Eliminated:\n");
-    printToScreen(A);;
+    printToScreen(A);
     printToScreen(b);
 
     x = createMatrix(b->r, 1);
