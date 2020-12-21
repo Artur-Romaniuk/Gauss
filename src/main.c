@@ -1,6 +1,7 @@
 #include "gauss.h"
 #include "backsubst.h"
 #include "mat_io.h"
+#include "test.h"
 #include <stdlib.h>
 #include <stdio.h>
 
@@ -19,15 +20,13 @@ int main(int argc, char** argv) {
     printToScreen(b);
 
     res = eliminate(A, b);
-    printf("Eliminated:\n");
-    printToScreen(A);
-    printToScreen(b);
 
     x = createMatrix(b->r, 1);
     if (x != NULL) {
         res = backsubst(x, A, b);
 
         printToScreen(x);
+        test(A, b, x);
         freeMatrix(x);
     }
     else {
