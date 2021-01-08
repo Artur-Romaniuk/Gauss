@@ -1,5 +1,5 @@
 #include "gauss.h"
-#include <math.h>
+#include <stdlib.h>
 
 #define epsilon 1e-6
 

@@ -20,21 +20,37 @@ int main(int argc, char** argv) {
     printToScreen(b);
 
     res = eliminate(A, b);
+    if (res != 0) {
+        fprintf(stderr, "Blad! Macierz A jest osobliwa!\n");
+        freeMatrix(A);
+        freeMatrix(b);
+        return res;
+    }
 
     x = createMatrix(b->r, 1);
     if (x != NULL) {
         res = backsubst(x, A, b);
-
+        if (res != 0) {
+            if (res == 1)
+                fprintf(stderr, "Blad! Dzielenie przez zero!\n");
+            else // res == 2
+                fprintf(stderr, "Blad! Nieprawidlowe rozmiary macierzy!\n");
+            freeMatrix(x);
+            freeMatrix(A);
+            freeMatrix(b);
+            return res;
+        }
         printToScreen(x);
         test(A, b, x);
         freeMatrix(x);
     }
     else {
-        fprintf(stderr, "Błąd! Nie mogłem utworzyć wektora wynikowego x.\n");
+        fprintf(stderr, "Blad! Nie moglem utworzyc wektora wynikowego x.\n");
     }
 
     freeMatrix(A);
     freeMatrix(b);
 
+    fprintf(stderr, "Program zakonczyl dzialanie bez bledu!\n");
     return 0;
 }

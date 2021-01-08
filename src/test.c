@@ -1,4 +1,5 @@
 #include "test.h"
+#include <stdlib.h>
 
 int test(Matrix* A, Matrix* B, Matrix* x)
 {
